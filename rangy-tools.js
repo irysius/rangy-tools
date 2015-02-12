@@ -121,7 +121,26 @@
 		return result;	
 	}
 
+	function mapTextNode(jsonNode) {
+		var textNodes = _mapNode(jsonNode.node);
+		
+		function _mapNode(node) {
+			if (node.nodeName === '#text') {
+				return [ node ];
+			} else {
+				// flatten array
+				return [].concat.apply([], node.childNodes.map(_mapNode));
+			}
+		}
+
+		return {
+			textNodes 	: textNodes,
+			text 	 	: jsonNode.text
+		}
+	}
+
 	return {
-		getJsonNodesFromRange: getJsonNodesFromRange
+		getJsonNodesFromRange: getJsonNodesFromRange,
+		mapTextNode: mapTextNode
 	}
 });
