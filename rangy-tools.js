@@ -31,7 +31,7 @@
 		function _compareNodes(node) {
 			if (node === target) {
 				return true;
-			} else if (node.parentElement === limit) {
+			} else if (node.parentElement === limit || !node.parentElement) {
 				return false;
 			} else {
 				return _compareNodes(node.parentElement);
@@ -128,19 +128,28 @@
 			if (node.nodeName === '#text') {
 				return [ node ];
 			} else {
+				var array = nodesAsArray(node.childNodes);
 				// flatten array
-				return [].concat.apply([], node.childNodes.map(_mapNode));
+				return [].concat.apply([], array.map(_mapNode));
 			}
 		}
 
 		return {
-			textNodes 	: textNodes,
-			text 	 	: jsonNode.text
+			textNodes: textNodes,
+			text: jsonNode.text
 		}
+	}
+
+	function replaceTextNode(textNode, text) {
+		var newNode = document.createTextNode(text);
+		var parentElement = textNode.parentElement;
+		parentElement.replaceChild(newNode, textNode);
+		return newNode;
 	}
 
 	return {
 		getJsonNodesFromRange: getJsonNodesFromRange,
-		mapTextNode: mapTextNode
+		mapTextNode: mapTextNode,
+		replaceTextNode: replaceTextNode
 	}
 });
