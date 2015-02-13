@@ -7,13 +7,13 @@
 	}
 })(function (rangy, rangyutils) {
 	rangy.init();
+	var nbsp = '\xA0';
+	var mdot = '\xB7';
 
 	var Nbsper = function () {
-		var nsbp = '\xA0';
-		var mdot = '\xB7';
 		var button = document.createElement('button');
 		button.className = 'medium-editor-action';
-		button.textContent = '&amp;nbsp;';
+		button.textContent = '&nbsp;';
 		button.onclick = function () {
 			mainToggle();
 		}
@@ -77,12 +77,19 @@
 		var range = getFirstRange();
 		var saved = saveSelection(range.commonAncestorContainer);
 		var x = rangyutils.getJsonNodesFromRange(range);
+		console.log(x);
 		var result = { convertToNbsp: false };
 		if (x) {
-			var y = x.map(rangyutils.mapTextNode);
-			var z = y.map(toggleNbsp);
-			if (z.any(function (_z) { return _z.convertToNbsp; })) {
-				result.convertToNbsp = true;
+			if (x.hasOwnProperty('length') && x.map) {
+				var y = x.map(rangyutils.mapTextNode);
+				var z = y.map(toggleNbsp);
+				if (z.any(function (_z) { return _z.convertToNbsp; })) {
+					result.convertToNbsp = true;
+				}
+			} else {
+				var a = rangyutils.mapTextNode(x);
+				var b = toggleNbsp(a);
+				result.convertToNbsp = b.convertToNbsp;
 			}
 			var newRange = getFirstRange();
 			restoreSelection(newRange.commonAncestorContainer, saved);

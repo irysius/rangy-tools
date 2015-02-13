@@ -3,7 +3,7 @@
 		define([], definition);
 	} else {
 		var exports = definition();
-		window.RangyTools = exports;
+		window.RangyUtils = exports;
 	}
 })(function () {
 	function nodesAsArray(nodes) {
