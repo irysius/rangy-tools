@@ -1,3 +1,4 @@
+/*global define, console */
 (function (definition) {
 	if (typeof define === 'function' && define.amd) {
 		define(['rangy', 'rangyutils'], definition);
@@ -43,14 +44,15 @@
 		jsonNode.textNodes.forEach(function (node) {
 			var originalText = node.textContent;
 			var replacementText = '';
+			var targetText = '';
 			if (jsonNode.text.length < node.textContent.length) {
 				var index = originalText.indexOf(jsonNode.text);
-				var targetText = originalText.substring(index, index + jsonNode.text.length);
+				targetText = originalText.substring(index, index + jsonNode.text.length);
 				console.log(targetText);
 				targetText = toggleText(targetText);
 				replacementText = originalText.substring(0, index) + targetText + originalText.substring(index + jsonNode.text.length);
 			} else {
-				var targetText = originalText;
+				targetText = originalText;
 				console.log(targetText);
 				targetText = toggleText(targetText);
 				replacementText = targetText;
@@ -155,7 +157,7 @@
 			var selectedTextRange = document.selection.createRange();
 			var preSelectionTextRange = document.body.createTextRange();
 			preSelectionTextRange.moveToElementText(containerEl);
-			preSelectionTextRange.setEndPoint("EndToStart", selectedTextRange);
+			preSelectionTextRange.setEndPoint('EndToStart', selectedTextRange);
 			var start = preSelectionTextRange.text.length;
 
 			return {
@@ -168,8 +170,8 @@
 			var textRange = document.body.createTextRange();
 			textRange.moveToElementText(containerEl);
 			textRange.collapse(true);
-			textRange.moveEnd("character", savedSel.end);
-			textRange.moveStart("character", savedSel.start);
+			textRange.moveEnd('character', savedSel.end);
+			textRange.moveStart('character', savedSel.start);
 			textRange.select();
 		};
 	}

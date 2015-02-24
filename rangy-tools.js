@@ -1,3 +1,4 @@
+/*global define, console */
 (function (definition) {
 	if (typeof define === 'function' && define.amd) {
 		define([], definition);
