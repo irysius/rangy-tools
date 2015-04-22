@@ -63,7 +63,7 @@
 			if (j === -1) { throw { message: 'matching code is busted.' }; }
 			var results = nodeArray.slice(i, j + 1).map(nodeAsJson);
 			results[0] = headJsonNode(results[0], wrappedRange.startContainer, wrappedRange.startOffset);
-			results[results.length - 1] = tailJsonNode(results[1], wrappedRange.endContainer, wrappedRange.endOffset);
+			results[results.length - 1] = tailJsonNode(results[results.length - 1], wrappedRange.endContainer, wrappedRange.endOffset);
 			return results;
 		}
 	}
